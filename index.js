@@ -19,9 +19,9 @@ const herokuTimeoutHandler = (_req, res, next) => {
   res.socket.write = (data, encoding, callback) => {
     if (!socketWasWrittenTo) {
       socketWasWrittenTo = true;
-      const dataSentAhead =
+      const dataSentAheadCount =
         RESPONSE_DATA_THAT_CAN_BE_SENT_AHEAD.length - remainingResponseDataThatCanBeSentAhead.length;
-      data = data.substr(dataSentAhead.length);
+      data = data.substr(dataSentAheadCount);
       clearInterval(interval);
     }
     return origSocketWrite(data, encoding, callback);
